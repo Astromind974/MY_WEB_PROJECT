@@ -16,7 +16,7 @@ function App() {
         heading="Cities"
         onSelectedItem={handleSelectedItem}
       />
-      {alertVisible && <Alert>Hello World!</Alert>}
+      {alertVisible && <Alert onClose={() => alertVisibility(false)}>Hello World!</Alert>}
       <Button onClick={() => alertVisibility(true)}>Press it</Button>
     </div>
   );

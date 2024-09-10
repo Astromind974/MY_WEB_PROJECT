@@ -9,12 +9,12 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE
 }).promise()
 
-export async function getNotes() {
+export async function getUsers() {
     const [rows] = await pool.query("SELECT * FROM Users")
     return rows
 }
 
-export async function getNote(id) {
+export async function getUser(id) {
     const [rows] = await pool.query(`
         SELECT *
         FROM Users
@@ -23,14 +23,26 @@ export async function getNote(id) {
     return rows[0]
 }
 
-export async function createNote(email, bio, country) {
+export async function createUser(email, password, firstname, lastname, bio, country) {
     const [result] = await pool.query(`
-        INSERT INTO Users (email, bio, country)
-        VALUES (?, ?, ?)
-        `, [email, bio, country])
+        INSERT INTO Users (email, password, firstname, lastname, bio, country)
+        VALUES (?, ?, ?, ?, ?, ?)
+        `, [email, password, firstname, lastname, bio, country])
     const id = result.insertId
-    return getNote(id)
+    return getUser(id)
 }
 
-const note = await createNote("test@test.com", "test", "UK")
-console.log(note)
+export async function replaceUser(id, email, password, firstname, lastname, bio, country) {
+    const [result] = await pool.query(`
+        REPLACE INTO Users
+        VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `, [id, email, password, firstname, lastname, bio, country])
+    return getUser(id)
+}
+
+export async function deleteUser(id) {
+    const [result] = await pool.query(`
+        DELETE FROM Users
+        WHERE Users.id=?
+    `, [id])
+}

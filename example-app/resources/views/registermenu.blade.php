@@ -1,7 +1,7 @@
 <form method="POST" action="/register">
   @csrf
   <div class="form-group">
-    <label for="InputName">Name</label>
+    <label for="InputName">Username</label>
     <input name="name" type="text" class="form-control" id="InputName" placeholder="" required>
     @error('name')
     <div class="alert alert-danger" role="alert">

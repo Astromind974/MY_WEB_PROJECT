@@ -12,6 +12,7 @@
             <h2>Cost: {{$monster->cost}}</h2>
             <h2>Attack: {{$monster->attack}}</h2>
             <h2>Hp: {{$monster->hp}}</h2>
+            <h3>Effect:</h3>
             <p>{{$monster->bio}}</p>
         </div>
     </div>
